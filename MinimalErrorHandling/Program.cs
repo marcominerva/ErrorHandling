@@ -17,7 +17,7 @@ builder.Services.TryAddSingleton<IActionResultExecutor<ObjectResult>, ProblemDet
 
 builder.Services.AddProblemDetails(options =>
 {
-    /* These configurations are optional. */
+    /* These configurations are optional and can be used to map specific exception to custom status code. */
     options.Map<HttpRequestException>
      (ex => new StatusCodeProblemDetails(StatusCodes.Status503ServiceUnavailable));
 
@@ -59,13 +59,19 @@ app.MapPost("/api/errors/people", (Person person) =>
         return Results.ValidationProblem(errors);
     }
 
-    return Results.NoContent();
+    return Results.Ok("Try not to set the FirstName");
 });
 
 app.MapGet("/api/errors/exception", () =>
 {
     // Thanks to the ProblemDetails NuGet package, this error is returned using a ProblemDetails response.
     throw new Exception("Error 42");
+});
+
+app.MapGet("/api/errors/httprequestexception", () =>
+{
+    // Thanks to the ProblemDetails NuGet package, this error is returned using a ProblemDetails response.
+    throw new HttpRequestException("Extenal API calling error");
 });
 
 app.Run();

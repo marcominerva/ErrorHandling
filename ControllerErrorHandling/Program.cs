@@ -44,7 +44,7 @@ builder.Services.AddProblemDetails(options =>
     // you can use this line of code, that add a call to AddProblemDetailsConventions (line 65).
     //options.ValidationProblemStatusCode = StatusCodes.Status422UnprocessableEntity;
 
-    /* These configurations are optional and can be used to map specific exception to custom status code. */
+    /* These configurations are optional and can be used to map specific exceptions to custom status codes. */
     options.Map<HttpRequestException>
         (ex => new StatusCodeProblemDetails(StatusCodes.Status503ServiceUnavailable));
 

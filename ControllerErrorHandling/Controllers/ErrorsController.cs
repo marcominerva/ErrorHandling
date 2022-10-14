@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication1.Controllers;
+namespace ControllerErrorHandling.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Produces(MediaTypeNames.Application.Json)]
 public class ErrorsController : ControllerBase
 {
     [HttpGet("notfound")]

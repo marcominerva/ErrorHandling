@@ -18,8 +18,7 @@ builder.Services.TryAddSingleton<IActionResultExecutor<ObjectResult>, ProblemDet
 builder.Services.AddProblemDetails(options =>
 {
     /* These configurations are optional and can be used to map specific exceptions to custom status code. */
-    options.Map<HttpRequestException>
-     (ex => new StatusCodeProblemDetails(StatusCodes.Status503ServiceUnavailable));
+    options.Map<HttpRequestException>(ex => new StatusCodeProblemDetails(StatusCodes.Status503ServiceUnavailable));
 
     options.Map<ApplicationException>(ex => new StatusCodeProblemDetails(StatusCodes.Status400BadRequest));
 

@@ -14,7 +14,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.InvalidModelStateResponseFactory = actionContext =>
     {
         var errors = actionContext.ModelState.Where(e => e.Value?.Errors.Any() ?? false)
-            .Select(e => new ValidationError(e.Key, e.Value.Errors.First().ErrorMessage));
+            .SelectMany(e => e.Value.Errors.Select(x => new ValidationError(e.Key, x.ErrorMessage)));
 
         var httpContext = actionContext.HttpContext;
         var statusCode = StatusCodes.Status422UnprocessableEntity;
